@@ -56,6 +56,8 @@ jobs:
 
 - name: pull-and-deploy
   plan:
+  - get: cpp-app-image
+    trigger: true
   - get: cpp-app-source
   - put: cpp-app-k8s
     params:

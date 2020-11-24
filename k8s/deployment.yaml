@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cpp-app
+  name: cpp-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpp-app
+  template:
+    metadata:
+      labels:
+        app: cpp-app
+    spec:
+      containers:
+      - image: ashumilov/cpp-app
+        name: cpp-app
+        resources: {}
+status: {}

@@ -15,7 +15,7 @@ spec:
         app: cpp-app
     spec:
       containers:
-      - image: ashumilov/cpp-app
+      - image: ashumilov/cpp-app-image
         name: cpp-app
         resources: {}
 status: {}

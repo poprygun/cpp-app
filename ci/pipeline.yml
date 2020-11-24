@@ -1,0 +1,38 @@
+resources:
+- name: cpp-app-source
+  type: git
+  source:
+    uri: https://github.com/poprygun/cpp-app.git
+    branch: master
+
+- name: cpp-app-image
+  type: registry-image
+  icon: docker
+  source:
+    repository: ((docker-hub-username))/cpp-app-image
+    username: ((docker-hub-username))
+    password: ((docker-hub-password))
+
+jobs:
+- name: build-and-push
+  plan:
+  - get: cpp-app-source
+  - task: build-task-image
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: vito/oci-build-task
+      inputs:
+      - name: cpp-app-source
+      outputs:
+      - name: image
+      params:
+        CONTEXT: cpp-app-source
+      run:
+        path: build
+  - put: cpp-app-image
+    params:
+      image: image/image.tar

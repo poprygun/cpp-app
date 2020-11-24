@@ -1,5 +1,15 @@
 ## Configure pipeline
 
+## Tags
+
+`v1.0` Only use Concourse resources to buid an image, push to registry, and deploy to k8s
+`v1.1` Use Concourse resources to buid an image, push to registry, deploy to k8s using [Argo CD](https://argoproj.github.io/argo-cd/)
+
+## Create Argo CD app
+
+```bash
+argocd app create cpp-app --repo https://github.com/poprygun/cpp-app.git --path argo --dest-server https://kubernetes.default.svc --dest-namespace default
+```
 
 ## Expose Concourse pod
 

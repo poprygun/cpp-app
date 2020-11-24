@@ -29,9 +29,3 @@ fly -t cpp-app-target set-pipeline -c ci/pipeline.yml -p cpp-app-pipeline -l ci/
 ```bash
 fly -t cpp-app-target trigger-job -j cpp-app-pipeline/build-and-push -w
 ```
-
-## Trigger push to k8s job
-
-```bash
-fly -t cpp-app-target trigger-job -j cpp-app-pipeline/pull-and-deploy -w
-```

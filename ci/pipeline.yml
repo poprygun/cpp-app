@@ -11,9 +11,34 @@ resources:
   source:
     repository: ((harbor-registry))/cpp-app-image
     username: ((harbor-username))
-    password: ((harbor-password))   
+    password: ((harbor-password))
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    initial_version: '1.0.0'
+    uri: https://github.com/poprygun/cpp-app.git
+    branch: master
+    file: version
 
 jobs:
+- name: bump-version
+  plan:
+  - get: version
+    params: {bump: minor}
+  - task: display-version
+    config:
+      platform: linux
+      image_resource:
+        type: semver
+      inputs:
+      - name: version
+      run:
+        path: cat
+        args: [version/version]
+  - put: version
+    params: {file: version/version}  
 - name: build-and-push
   plan:
   - get: cpp-app-source

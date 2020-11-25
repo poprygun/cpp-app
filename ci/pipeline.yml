@@ -17,10 +17,11 @@ resources:
   type: semver
   source:
     driver: git
-    initial_version: '1.0.0'
-    uri: https://github.com/poprygun/cpp-app.git
+    uri: git@github.com:poprygun/cpp-app.git
     branch: master
     file: version
+    username: ((repo-username))
+    private_key: ((repo-private-key))
 
 jobs:
 - name: bump-version
@@ -31,7 +32,8 @@ jobs:
     config:
       platform: linux
       image_resource:
-        type: semver
+        type: registry-image
+        source: {repository: "busybox"}
       inputs:
       - name: version
       run:

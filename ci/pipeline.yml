@@ -24,10 +24,12 @@ resources:
     private_key: ((repo-private-key))
 
 jobs:
-- name: bump-version
+- name: build-and-push
   plan:
   - get: version
     params: {bump: minor}
+  - put: version
+    params: {file: version/version}
   - task: display-version
     config:
       platform: linux
@@ -38,11 +40,7 @@ jobs:
       - name: version
       run:
         path: cat
-        args: [version/version]
-  - put: version
-    params: {file: version/version}  
-- name: build-and-push
-  plan:
+        args: [version/version]      
   - get: cpp-app-source
     trigger: true
   - task: build-task-image
@@ -64,3 +62,4 @@ jobs:
   - put: cpp-app-image
     params:
       image: image/image.tar
+      additional_tags: version/version
